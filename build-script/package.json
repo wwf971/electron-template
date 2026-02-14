@@ -1,0 +1,12 @@
+{
+  "name": "build-script",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build:win": "pnpm --dir ../backend exec electron-builder --win --config ../build-script/electron-builder-dir-win.json && node cleanup.js",
+    "build:mac": "pnpm --dir ../backend exec electron-builder --mac --config ../build-script/electron-builder-dir-mac.json && node cleanup.js",
+    "build:single:win": "pnpm --dir ../backend exec electron-builder --win --config ../build-script/electron-builder-single.json && node cleanup-single.js",
+    "build:single:mac": "pnpm --dir ../backend exec electron-builder --mac --config ../build-script/electron-builder-single.json && node cleanup-single.js",
+    "clean": "node cleanup.js"
+  }
+}
