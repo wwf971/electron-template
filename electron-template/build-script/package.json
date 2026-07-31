@@ -1,0 +1,12 @@
+{
+  "name": "build-script",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build:win": "node resolve-electron-utils.js && node clean-output.js ../build/win && pnpm --dir ../backend exec electron-builder --win --config ../build-script/electron-builder-dir-win.json && node cleanup.js",
+    "build:mac": "node resolve-electron-utils.js && node clean-output.js ../build/mac && pnpm --dir ../backend exec electron-builder --mac --config ../build-script/electron-builder-dir-mac.json && node cleanup.js",
+    "build:win:single": "node resolve-electron-utils.js && node clean-output.js ../build/win-single && pnpm --dir ../backend exec electron-builder --win --config ../build-script/electron-builder-single-win.json && node cleanup-single.js",
+    "build:mac:single": "node resolve-electron-utils.js && node clean-output.js ../build/mac-single && pnpm --dir ../backend exec electron-builder --mac --config ../build-script/electron-builder-single-mac.json && node cleanup-single.js",
+    "clean": "node cleanup.js"
+  }
+}

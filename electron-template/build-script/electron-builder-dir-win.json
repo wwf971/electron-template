@@ -1,0 +1,42 @@
+{
+  "appId": "com.wwf971.electron-utils",
+  "productName": "ElectronUtils",
+  "directories": {
+    "output": "../build/win"
+  },
+  "compression": "store",
+  "extraResources": [
+    {
+      "from": "../frontend/build",
+      "to": "react-build",
+      "filter": [
+        "**/*"
+      ]
+    },
+    {
+      "from": "../build/electron-utils",
+      "to": "electron-utils",
+      "filter": [
+        "**/*"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "from": "../backend",
+      "to": ".",
+      "filter": ["main.js", "preload.js", "electron-utils.js"]
+    }
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "dir",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "icon": null
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "electron-main",
+  "productName": "ElectronUtils",
+  "version": "1.0.0",
+  "description": "ElectronUtils demo gallery - Electron main process",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "NODE_ENV=development electron ."
+  },
+  "keywords": ["electron", "hello-world"],
+  "author": "timwang",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^40.0.0",
+    "electron-builder": "^26.4.0"
+  }
+}
+

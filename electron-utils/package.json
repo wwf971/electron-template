@@ -1,0 +1,10 @@
+{
+  "name": "electron-utils",
+  "version": "0.0.1",
+  "description": "Shared general-purpose Electron features: main-process modules, preload bridges, optional React components",
+  "exports": {
+    "./backend": "./backend/index.js",
+    "./preload": "./preload/index.js",
+    "./frontend": "./frontend/index.jsx"
+  }
+}

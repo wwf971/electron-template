@@ -1,0 +1,18 @@
+{
+  "name": "electron-template-workspace",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Electron + React template workspace",
+  "scripts": {
+    "build:frontend": "cd frontend && pnpm run build",
+    "build:win": "pnpm run build:frontend && cd build-script && pnpm run build:win",
+    "build:mac": "pnpm run build:frontend && cd build-script && pnpm run build:mac",
+    "build:all": "pnpm run build:frontend && cd build-script && pnpm run build:win && pnpm run build:mac",
+    "build:win:single": "pnpm run build:frontend && cd build-script && pnpm run build:win:single",
+    "build:mac:single": "pnpm run build:frontend && cd build-script && pnpm run build:mac:single",
+    "build:all:single": "pnpm run build:frontend && cd build-script && pnpm run build:win:single && pnpm run build:mac:single",
+    "dev": "cd backend && pnpm run dev"
+  },
+  "author": "timwang",
+  "license": "MIT"
+}

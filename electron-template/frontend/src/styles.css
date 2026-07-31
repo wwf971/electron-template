@@ -1,0 +1,446 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #f5f5f5;
+    color: #222;
+    font-size: 14px;
+}
+
+/* ---- custom title bar (window is frameless) ---- */
+
+.title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 26px;
+    padding: 0 4px 0 8px;
+    background: #e8e8e8;
+    border-bottom: 1px solid #ccc;
+    -webkit-app-region: drag;
+    user-select: none;
+}
+
+.title-bar-name {
+    font-size: 12px;
+    color: #555;
+}
+
+.title-bar-buttons {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    -webkit-app-region: no-drag;
+}
+
+.title-bar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    border-radius: 3px;
+    color: #555;
+    cursor: pointer;
+}
+
+.title-bar-btn:hover {
+    background: #d5d5d5;
+    color: #222;
+}
+
+/* ---- gallery (entry page) ---- */
+
+.gallery-page {
+    padding: 10px 12px;
+}
+
+.gallery-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 8px;
+}
+
+.gallery-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.gallery-subtitle {
+    font-size: 12px;
+    color: #777;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 4px 6px;
+    margin-bottom: 6px;
+    color: #666;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    color: #222;
+    background: transparent;
+}
+
+.search-match {
+    background: #ffdf70;
+    border-radius: 2px;
+}
+
+.gallery-hint {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 8px;
+}
+
+.key-name {
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    background: #e8e8e8;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 0 4px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+}
+
+.subapp-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.subapp-card:hover {
+    border-color: #3b82f6;
+}
+
+.subapp-card-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.subapp-card-desc {
+    font-size: 12px;
+    color: #777;
+}
+
+.gallery-empty {
+    font-size: 13px;
+    color: #777;
+    padding: 4px 0;
+}
+
+/* ---- sub app page ---- */
+
+.subapp-page {
+    padding: 8px 12px;
+}
+
+.subapp-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 8px;
+}
+
+.subapp-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.subapp-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.subapp-desc {
+    font-size: 13px;
+    color: #555;
+    max-width: 480px;
+}
+
+.subapp-note {
+    font-size: 13px;
+    color: #a33;
+}
+
+.feature-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.feature-label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btn-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 3px 8px;
+    font-size: 13px;
+    color: #222;
+    cursor: pointer;
+}
+
+.btn:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+.btn:disabled {
+    color: #aaa;
+    cursor: default;
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+    padding: 2px;
+    color: #555;
+    cursor: pointer;
+}
+
+.btn-icon:hover {
+    color: #222;
+}
+
+.bounds-view {
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 12px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 6px;
+    min-width: 180px;
+    user-select: text;
+}
+
+/* ---- compact mode: fills the whole tiny frameless window ---- */
+
+.compact-window {
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    border: 1px solid #888;
+    user-select: none;
+    overflow: hidden;
+}
+
+/* expand-button layout: window border -> small margin -> the expand button */
+
+.compact-expand-window {
+    padding: 3px;
+}
+
+.compact-expand-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    color: #555;
+    cursor: pointer;
+}
+
+.compact-expand-btn:hover {
+    background: #e4e4e4;
+}
+
+/* button-grid layout: 4x2 grid, top-left cell is the expand button */
+
+.compact-grid-window {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 3px;
+    padding: 3px;
+}
+
+.compact-grid-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    color: #555;
+    cursor: pointer;
+}
+
+.compact-grid-btn:hover {
+    background: #e4e4e4;
+}
+
+/* ---- clipboard cache: entry list (expanded page) ---- */
+
+.clip-entry-list {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    min-width: 380px;
+    max-width: 560px;
+}
+
+.clip-entry-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.clip-entry-row:last-child {
+    border-bottom: none;
+}
+
+.clip-entry-row.is-current {
+    background: #eef4ff;
+}
+
+.clip-entry-empty {
+    font-size: 12px;
+    color: #777;
+    padding: 6px;
+}
+
+.clip-entry-type {
+    font-size: 11px;
+    color: #777;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 0 4px;
+    flex-shrink: 0;
+}
+
+.clip-entry-snippet {
+    flex: 1;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.clip-entry-thumb {
+    flex: 1;
+    max-height: 28px;
+    max-width: 120px;
+    object-fit: contain;
+    object-position: left;
+}
+
+.clip-entry-time {
+    font-size: 11px;
+    color: #999;
+    flex-shrink: 0;
+}
+
+.cache-size-value {
+    font-size: 13px;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* ---- clipboard cache: shrunk player ---- */
+
+.clip-compact-window {
+    display: flex;
+    flex-direction: column;
+}
+
+.clip-compact-display {
+    flex: 1;
+    overflow: auto;
+    padding: 4px;
+    cursor: move;
+}
+
+.clip-compact-empty {
+    font-size: 12px;
+    color: #999;
+}
+
+.clip-compact-text {
+    font-size: 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.clip-compact-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.clip-compact-controls {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px;
+    border-top: 1px solid #ddd;
+}
+
+.clip-compact-controls .btn {
+    padding: 2px 5px;
+    font-size: 11px;
+}
+
+.clip-compact-index {
+    font-size: 11px;
+    color: #777;
+    min-width: 26px;
+    text-align: center;
+}

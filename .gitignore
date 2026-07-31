@@ -1,7 +1,2 @@
-node_modules/
-build/
-dist/
-*.log
 .DS_Store
-package.json.backup
-setup.sh
+maintenance.md
