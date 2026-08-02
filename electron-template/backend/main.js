@@ -3,11 +3,39 @@ const fs = require('fs');
 const path = require('path');
 const { requireElectronUtils } = require('./electron-utils.js');
 
-const { registerWindowControlIpc, registerClipboardCacheIpc } = requireElectronUtils('backend');
+const {
+    registerWindowControlIpc,
+    registerSimpleConfigIpc,
+    applyTransparentWindowSwitches,
+} = requireElectronUtils('backend');
+// per-sub-app backend logic lives in backend/sub-app/<sub-app id>/
+const { registerClipboardCacheIpc } = require('./sub-app/clipboard-cache/main.js');
+const { registerPathManagerIpc } = require('./sub-app/path-manager/main.js');
+const { registerTransparentWindowIpc } = require('./sub-app/transparent-window/main.js');
+
+// gpu switches needed by transparent windows (transparent-window sub app);
+// must be appended before the app 'ready' event
+applyTransparentWindowSwitches();
 
 // Define environment variables
 const isDev = !app.isPackaged;
 const isMacOS = process.platform === 'darwin';
+
+// anchor for the ${dirExe} token used by simple-config and sub-app data files.
+// packaged: the folder holding the executable. the executable is deployed into
+// a subfolder (e.g. <dest>/single/, <dest>/multi/), so ${dirExe}/../data is a
+// data folder shared by all build modes.
+// dev: a pseudo folder <project root>/dev-run, so ${dirExe}/../data resolves
+// to <project root>/data (the folder does not need to exist, it only anchors paths).
+const dirExe = app.isPackaged
+    ? path.dirname(process.execPath)
+    : path.join(__dirname, '..', 'dev-run');
+
+// html of the frontend build. the main window loads it directly; the
+// transparent-window sub app loads it too, with hash '#transparent-window-demo'
+const htmlPath = isDev
+    ? path.join(__dirname, '../frontend/build/index.html')
+    : path.join(process.resourcesPath, 'react-build/index.html');
 
 let mainWindow = null;
 
@@ -31,16 +59,6 @@ function createWindow() {
         backgroundColor: '#2e2c29'
     });
 
-    // Load React app - check if we're in development or production
-    let htmlPath;
-    if (isDev) {
-        // Development: React is in relative path
-        htmlPath = path.join(__dirname, '../frontend/build/index.html');
-    } else {
-        // Production: React files are in extraResources
-        htmlPath = path.join(process.resourcesPath, 'react-build/index.html');
-    }
-    
     console.log("Trying to load React from:", htmlPath);
     
     // Check if file exists
@@ -80,7 +98,11 @@ app.whenReady().then(() => {
     // hide the default menu bar (dev tools stay reachable via F12)
     Menu.setApplicationMenu(null);
     registerWindowControlIpc();
+    registerSimpleConfigIpc({ dirExe }); // layered .jsonc config files
     registerClipboardCacheIpc(); // silently caches recent clipboard content
+    registerPathManagerIpc({ dirExe }); // path bookmarks of the path-manager sub app
+    // demo window of the transparent-window sub app
+    registerTransparentWindowIpc({ htmlPath, preloadPath: path.join(__dirname, 'preload.js') });
     createWindow();
 });
 

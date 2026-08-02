@@ -11,6 +11,9 @@
   "keywords": ["electron", "hello-world"],
   "author": "timwang",
   "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
   "devDependencies": {
     "electron": "^40.0.0",
     "electron-builder": "^26.4.0"

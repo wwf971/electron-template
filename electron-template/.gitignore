@@ -7,3 +7,6 @@ package.json.backup
 setup.sh
 maintenance.md
 /copy*
+
+*.0.yaml
+*.bak

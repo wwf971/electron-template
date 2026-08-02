@@ -1,9 +1,20 @@
-const { ipcMain, clipboard, nativeImage, BrowserWindow } = require('electron');
+const { ipcMain, BrowserWindow } = require('electron');
+const { requireElectronUtils } = require('../../electron-utils.js');
 
-// Clipboard-cache feature (main process side).
+const {
+    clipboardReadText,
+    clipboardReadImageDataUrl,
+    clipboardWriteText,
+    clipboardWriteImageDataUrl,
+} = requireElectronUtils('backend');
+
+// Clipboard-cache sub app (main process side).
 // Silently polls the system clipboard and caches the last N contents (text or
 // image), so accidentally overwritten clipboard content can be recovered.
 // Electron has no clipboard-change event, so polling is the standard way.
+//
+// The cache is stateful and app-specific, so it lives here with the sub app;
+// electron-utils only provides the stateless clipboard read/write functions.
 //
 // entry = { id, type: 'text' | 'image', text, imageDataUrl, timeCopied }
 // entries are kept newest first.
@@ -49,11 +60,11 @@ function registerClipboardCacheIpc({ cacheSizeDefault = 5, pollIntervalMs = 1000
             return { code: -1, message: 'entry not found: ' + entryId };
         }
         if (entry.type === 'image') {
-            clipboard.writeImage(nativeImage.createFromDataURL(entry.imageDataUrl));
+            clipboardWriteImageDataUrl(entry.imageDataUrl);
             // remember as last seen, so the next poll does not re-capture it
             imageDataUrlSeenLast = entry.imageDataUrl;
         } else {
-            clipboard.writeText(entry.text);
+            clipboardWriteText(entry.text);
             textSeenLast = entry.text;
         }
         return { code: 0 };
@@ -61,16 +72,15 @@ function registerClipboardCacheIpc({ cacheSizeDefault = 5, pollIntervalMs = 1000
 }
 
 function capturePoll() {
-    const image = clipboard.readImage();
-    if (!image.isEmpty()) {
-        const imageDataUrl = image.toDataURL();
+    const imageDataUrl = clipboardReadImageDataUrl();
+    if (imageDataUrl !== '') {
         if (imageDataUrl !== imageDataUrlSeenLast) {
             imageDataUrlSeenLast = imageDataUrl;
             addEntry({ type: 'image', imageDataUrl });
         }
         return;
     }
-    const text = clipboard.readText();
+    const text = clipboardReadText();
     if (text !== '' && text !== textSeenLast) {
         textSeenLast = text;
         addEntry({ type: 'text', text });

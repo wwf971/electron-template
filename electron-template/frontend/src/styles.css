@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -12,6 +19,21 @@ body {
     background: #f5f5f5;
     color: #222;
     font-size: 14px;
+}
+
+/* title bar stays fixed; only the page below it scrolls */
+.app-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.app-shell > .gallery-page,
+.app-shell > .subapp-page {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
 }
 
 /* ---- custom title bar (window is frameless) ---- */
@@ -26,6 +48,7 @@ body {
     border-bottom: 1px solid #ccc;
     -webkit-app-region: drag;
     user-select: none;
+    flex-shrink: 0;
 }
 
 .title-bar-name {
@@ -121,6 +144,29 @@ body {
     border: 1px solid #ccc;
     border-radius: 3px;
     padding: 0 4px;
+}
+
+.gallery-section {
+    margin-bottom: 10px;
+}
+
+/* section title row: "basic app [i] ------------" */
+.gallery-section-title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 6px;
+}
+
+.gallery-section-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+}
+
+.gallery-section-line {
+    flex: 1;
+    border-top: 1px solid #ddd;
 }
 
 .gallery-grid {
@@ -443,4 +489,443 @@ body {
     color: #777;
     min-width: 26px;
     text-align: center;
+}
+
+/* ---- transparent-window sub app: the transparent demo window ---- */
+
+/* the demo window loads the build with #transparent-window-demo; the page
+   background must stay transparent, otherwise nothing looks transparent */
+body.transparent-window-body {
+    background: transparent;
+}
+
+.tw-window {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+/* moving the window: css drag region lives on .tw-header-drag only.
+   the header itself must not be a drag region — its top 6px overlaps
+   .tw-resize-top, and a drag region there would steal the resize mousedown */
+.tw-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 6px 6px 4px;
+    background: rgba(232, 232, 232, 0.9);
+    border-bottom: 1px solid #999;
+    flex-shrink: 0;
+}
+
+.tw-header-drag {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    -webkit-app-region: drag;
+    cursor: move;
+}
+
+.tw-title {
+    font-size: 12px;
+    color: #333;
+    user-select: none;
+}
+
+.tw-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 18px;
+    border: none;
+    border-radius: 3px;
+    background: rgba(255, 100, 100, 0.85);
+    color: #333;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+}
+
+.tw-close:hover {
+    background: rgba(255, 50, 50, 1);
+}
+
+.tw-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.tw-text {
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 0 3px #000, 0 0 6px #000;
+    text-align: center;
+    user-select: none;
+}
+
+/* resizing the window: thin hit areas along edges/corners (a transparent
+   frameless window has no native resize borders on windows) */
+.tw-resize {
+    position: absolute;
+    -webkit-app-region: no-drag;
+    z-index: 10;
+}
+
+.tw-resize:hover {
+    background: rgba(100, 100, 100, 0.25);
+}
+
+.tw-resize-top { top: 0; left: 12px; right: 12px; height: 6px; cursor: ns-resize; }
+.tw-resize-bottom { bottom: 0; left: 12px; right: 12px; height: 6px; cursor: ns-resize; }
+.tw-resize-left { left: 0; top: 12px; bottom: 12px; width: 6px; cursor: ew-resize; }
+.tw-resize-right { right: 0; top: 12px; bottom: 12px; width: 6px; cursor: ew-resize; }
+.tw-resize-top-left { top: 0; left: 0; width: 12px; height: 12px; cursor: nwse-resize; }
+.tw-resize-top-right { top: 0; right: 0; width: 12px; height: 12px; cursor: nesw-resize; }
+.tw-resize-bottom-left { bottom: 0; left: 0; width: 12px; height: 12px; cursor: nesw-resize; }
+.tw-resize-bottom-right { bottom: 0; right: 0; width: 12px; height: 12px; cursor: nwse-resize; }
+
+/* ---- path manager sub app ---- */
+
+.pm-page {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+}
+
+.pm-view {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-self: stretch;
+    max-width: 640px;
+}
+
+.pm-title-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #ddd;
+}
+
+.pm-section-gap {
+    margin-top: 10px;
+}
+
+.pm-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pm-file-path {
+    font-size: 11px;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    user-select: text;
+}
+
+.pm-message {
+    font-size: 12px;
+    color: #2a6;
+    user-select: text;
+}
+
+.pm-message.is-error {
+    color: #a33;
+}
+
+.pm-search-input {
+    flex: 1;
+    outline: none;
+    font-size: 13px;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.pm-search-input:empty::before {
+    content: attr(data-placeholder);
+    color: #999;
+}
+
+.pm-note-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pm-empty {
+    font-size: 12px;
+    color: #999;
+    padding: 2px 0 2px 12px;
+}
+
+.pm-add-row {
+    margin-top: 4px;
+}
+
+.pm-category {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pm-category-header {
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.pm-category-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.pm-entry-row {
+    display: flex;
+    align-items: center;
+    padding: 1px 0 1px 12px;
+}
+
+.pm-entry-row.is-editing {
+    background: #f2f6ff;
+}
+
+/* fields + row controls; hugs content while editing so empty space to the
+   right of the input is outside the commit root */
+.pm-edit-cluster {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+}
+
+.pm-category-header .pm-edit-cluster {
+    gap: 3px;
+}
+
+.pm-edit-cluster.is-editing {
+    flex: 0 1 auto;
+    width: max-content;
+    max-width: 100%;
+}
+
+.pm-editable-value {
+    width: auto;
+    max-width: 100%;
+    line-height: 1;
+}
+
+.pm-editable-value .editable-value-content-row {
+    max-width: 100%;
+}
+
+.pm-entry-name {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.pm-entry-name-box {
+    flex-shrink: 0;
+    max-width: 180px;
+}
+
+.pm-entry-path {
+    font-size: 12px;
+    color: #555;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    user-select: text;
+}
+
+.pm-entry-path-box {
+    flex: 1;
+    min-width: 0;
+}
+
+.pm-btn-copy {
+    padding: 0 5px;
+    font-size: 11px;
+}
+
+/* ---- path manager: config page ---- */
+
+/* path + trailing buttons (folder open, ...): short path keeps the button
+   next to the text; long path shrinks/scrolls and pins buttons at the right */
+.pm-cfg-value-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.pm-cfg-value-cell .btn-icon,
+.pm-cfg-value-cell .pm-cfg-tag-used {
+    flex-shrink: 0;
+}
+
+.pm-cfg-value-cell .pm-config-value-box {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.pm-cfg-path-viewport {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.pm-cfg-path-track {
+    width: max-content;
+    white-space: nowrap;
+    font-size: 12px;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    color: #555;
+    user-select: text;
+    transition: transform 80ms ease-out;
+    will-change: transform;
+}
+
+.pm-cfg-value-text {
+    font-size: 12px;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    color: #555;
+    user-select: text;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pm-cfg-tag-used {
+    font-size: 11px;
+    color: #3b82f6;
+    border: 1px solid #3b82f6;
+    border-radius: 2px;
+    padding: 0 3px;
+    flex-shrink: 0;
+}
+
+.pm-config-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pm-config-key {
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 60px;
+}
+
+.pm-config-value {
+    font-size: 12px;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    color: #333;
+    user-select: text;
+}
+
+.pm-config-value-box {
+    min-width: 20px;
+}
+
+.pm-config-value-readonly {
+    font-size: 12px;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    color: #777;
+    user-select: text;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pm-config-file {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px 6px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.pm-config-file-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pm-config-file-label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.pm-config-file-state {
+    font-size: 11px;
+    color: #777;
+}
+
+.pm-btn-target {
+    padding: 0 5px;
+    font-size: 11px;
+}
+
+.pm-btn-target.is-active {
+    border-color: #3b82f6;
+    color: #3b82f6;
+}
+
+.pm-config-file-path-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
+    min-width: 0;
+    width: 100%;
+}
+
+.pm-config-file-path-row .btn-icon {
+    flex-shrink: 0;
+}
+
+.pm-config-file-path-row .pm-cfg-path-track {
+    font-size: 11px;
+    color: #999;
+}
+
+.pm-config-file-raw {
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 11px;
+    background: #f7f7f7;
+    border-top: 1px solid #eee;
+    padding: 3px 4px;
+    max-height: 120px;
+    overflow: auto;
+    user-select: text;
+    white-space: pre-wrap;
+}
+
+.pm-error {
+    font-size: 12px;
+    color: #a33;
+    user-select: text;
 }

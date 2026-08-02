@@ -6,7 +6,7 @@ import { sizeMinNormal } from './CompactWindowStore.js';
 export const sizeCompactClipboard = { width: 260, height: 200 };
 
 // ui state of the Clipboard Cache sub app. The cache itself lives in the
-// backend (electron-utils clipboard-cache); this store mirrors the entries
+// backend (backend/sub-app/clipboard-cache); this store mirrors the entries
 // and adds the player state (which entry is shown).
 export class ClipboardCacheStore {
     entries = []; // newest first, mirrored from backend

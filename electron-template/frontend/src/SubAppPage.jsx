@@ -5,6 +5,8 @@ import SubAppAlwaysOnTop from '../sub-app/SubAppAlwaysOnTop.jsx';
 import SubAppCompactWindow from '../sub-app/SubAppCompactWindow.jsx';
 import SubAppClipboardCache from '../sub-app/SubAppClipboardCache.jsx';
 import SubAppWindowControl from '../sub-app/SubAppWindowControl.jsx';
+import SubAppTransparentWindow from '../sub-app/SubAppTransparentWindow.jsx';
+import SubAppPathManager from '../sub-app-complex/SubAppPathManager.jsx';
 
 // Renders the current sub app full-window, as if a separate app was launched.
 // Every sub app gets the same header: exit button + feature name.
@@ -25,6 +27,8 @@ const SubAppPage = observer(({ store }) => {
                 {subApp.id === 'compact-window' && <SubAppCompactWindow store={store} />}
                 {subApp.id === 'clipboard-cache' && <SubAppClipboardCache store={store} />}
                 {subApp.id === 'window-control' && <SubAppWindowControl store={store} />}
+                {subApp.id === 'transparent-window' && <SubAppTransparentWindow store={store} />}
+                {subApp.id === 'path-manager' && <SubAppPathManager store={store} />}
             </div>
         </div>
     );

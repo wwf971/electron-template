@@ -1,7 +1,6 @@
-// Clipboard-cache bridge (preload side).
+// Clipboard-cache sub app (preload side).
 // Exposes window.clipboardCache in the renderer, mapping one function per IPC
-// channel of electron-utils/backend/clipboard-cache.js, plus one event
-// subscription. It adds no logic of its own.
+// channel of ./main.js, plus one event subscription. It adds no logic of its own.
 //
 // contextBridge and ipcRenderer are passed in from the app's preload.js.
 

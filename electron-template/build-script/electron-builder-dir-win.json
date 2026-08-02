@@ -25,7 +25,7 @@
     {
       "from": "../backend",
       "to": ".",
-      "filter": ["main.js", "preload.js", "electron-utils.js"]
+      "filter": ["main.js", "preload.js", "electron-utils.js", "sub-app/**/*"]
     }
   ],
   "win": {

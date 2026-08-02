@@ -14,8 +14,8 @@ electron-template/        each app repo (e.g. electron-transparent-text)
 (scaffold + demo)         (real product, copied once from the scaffold)
 ```
 
-- `electron-utils/` — the home of every feature that more than one app may want: always on top, compact window, window drag-to-move, minimize/maximize/bounds control, clipboard cache, etc. One feature spans up to three layers (main process, preload, renderer), and all its parts live here together.
-- `electron-template/` — the scaffold folder. Copy it to start a new app. It is also a runnable demo app (built as `ElectronUtils`): its entry page is a gallery of the features in `electron-utils/`, each opening as a sub app (see `../electron-template.md#Scaffold and Demo`).
+- `electron-utils/` — the home of every feature that more than one app may want: always on top, compact window, window drag-to-move, window resize-by-dragging-edges, minimize/maximize/bounds control, stateless clipboard read/write, layered simple-config files, two-layer simple-data files, transparent windows, etc. One feature spans up to three layers (main process, preload, renderer), and all its parts live here together.
+- `electron-template/` — the scaffold folder. Copy it to start a new app. It is also a runnable demo app (built as `ElectronUtils`): its entry page is a gallery of the features in `electron-utils/`, each opening as a sub app (see `../README.md#Scaffold and Demo`).
 - **app repos** — independent repos like `electron-transparent-text`. They keep only app-specific logic, and import the common features from `electron-utils/`.
 
 `react-comp-misc` (its own repo) plays the same "provider" role for electron-agnostic React components (icons, sliders, layout components). Both the demo app and the app repos import it at the frontend.
@@ -36,9 +36,9 @@ With the import-based pattern there is no duplicated feature code to keep aligne
 Start a new app:
 
 ```text
-copy electron-template/ ──▶ rename identity fields (see ../electron-template.md)
+copy electron-template/ ──▶ rename identity fields (see ../README.md)
 the wiring inside the scaffold already locates electron-utils and react-comp-misc
-(workspace sibling first, third_party/ submodule as fallback; see ../code-share.md)
+(workspace sibling first, third_party/ submodule as fallback; see ./code-share.md)
 ```
 
 Add a common feature:
@@ -57,8 +57,10 @@ edit electron-utils/ once ──▶ every project using the workspace sibling se
 
 A feature only one app needs stays in that app. If it later turns out to be general (this is how always-on-top and compact-window started, inside `electron-transparent-text`), move it into `electron-utils/` and delete the app-local copy.
 
+The reverse also happens: the clipboard cache started inside `electron-utils/`, but the cache is stateful and app-specific, so it moved into the demo app (`backend/sub-app/clipboard-cache/`); only the stateless clipboard read/write stayed in `electron-utils/`. In the demo app, each sub app keeps its backend logic under `backend/sub-app/<sub-app id>/` (see `./electron-template.md`).
+
 ## For More Details
 
-- import mechanics, dual-source resolve, packaging: `../code-share.md`
+- import mechanics, dual-source resolve, packaging: `./code-share.md`
 - scaffold sync checklist after template changes: `../maintenance.md`
-- demo app design (gallery, sub apps) and build commands: `../electron-template.md`
+- demo app design (gallery, sub apps): `./electron-template.md`; build commands: `../README.md`

@@ -1,7 +1,7 @@
 const { exposeWindowControl } = require('./window-control.js');
-const { exposeClipboardCache } = require('./clipboard-cache.js');
+const { exposeSimpleConfig } = require('./simple-config.js');
 
 module.exports = {
     exposeWindowControl,
-    exposeClipboardCache,
+    exposeSimpleConfig,
 };
